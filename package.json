@@ -1,0 +1,86 @@
+{
+  "name": "godoc-peek",
+  "displayName": "GoDoc Peek",
+  "description": "Peek Go documentation for pkg.Symbol written in Markdown, comments and string literals",
+  "icon": "media/logo.png",
+  "version": "0.1.0",
+  "publisher": "msyrus",
+  "keywords": [
+    "go",
+    "golang",
+    "documentation",
+    "godoc",
+    "hover",
+    "markdown"
+  ],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Other"
+  ],
+  "main": "./out/extension",
+  "activationEvents": [
+    "onLanguage:markdown",
+    "onLanguage:go"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "godocPeek.clearCache",
+        "title": "GoDoc Peek: Clear Documentation Cache"
+      },
+      {
+        "command": "godocPeek.showLog",
+        "title": "GoDoc Peek: Show Log"
+      }
+    ],
+    "configuration": {
+      "title": "GoDoc Peek",
+      "properties": {
+        "godocPeek.markdown.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Hover over `pkg.Symbol` inside inline code spans in Markdown files."
+        },
+        "godocPeek.goComments.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Hover over pkg.Symbol inside Go comments and string literals, where gopls shows nothing."
+        },
+        "godocPeek.networkFallback": {
+          "type": "boolean",
+          "default": true,
+          "description": "When `go doc` cannot resolve a package locally, `go get` it into a scratch module and retry (requires network)."
+        },
+        "godocPeek.maxLines": {
+          "type": "integer",
+          "default": 40,
+          "minimum": 5,
+          "description": "Maximum number of documentation lines shown in the hover before truncation."
+        },
+        "godocPeek.goDoc.workingDirectory": {
+          "type": "string",
+          "default": "",
+          "description": "Directory used to run `go doc`. Leave empty to search upwards from the current file for the nearest go.mod."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "lint": "eslint src --ext ts",
+    "validate": "npm run compile && npm run lint",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/node": "^20.19.39",
+    "@types/vscode": "^1.85.0",
+    "eslint": "^10.2.0",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.58.2"
+  }
+}
