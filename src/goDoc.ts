@@ -133,13 +133,28 @@ async function lookup(
 
   const config = vscode.workspace.getConfiguration("godocPeek");
   if (!config.get<boolean>("networkFallback", true)) {
+    logMiss(ref, "networkFallback 已关闭", lastError);
     return undefined;
   }
   if (!lastError || !NEEDS_DOWNLOAD.test(lastError)) {
+    logMiss(ref, "本地模块里查不到该符号", lastError);
     return undefined;
   }
 
-  return await lookupRemotely(ref, token, lastError);
+  const remote = await lookupRemotely(ref, token, lastError);
+  if (!remote) {
+    logMiss(ref, `已尝试联网获取 ${ref.importPath}`, undefined);
+  }
+  return remote;
+}
+
+function logMiss(
+  ref: GoSymbolRef,
+  reason: string,
+  detail: string | undefined,
+): void {
+  const firstLine = detail?.split("\n")[0];
+  log(`未找到 ${ref.raw} 的文档：${reason}${firstLine ? ` — ${firstLine}` : ""}`);
 }
 
 async function lookupRemotely(

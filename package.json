@@ -4,7 +4,7 @@
   "description": "Peek Go documentation for pkg.Symbol written in Markdown, comments and string literals",
   "icon": "media/logo.png",
   "version": "0.1.0",
-  "publisher": "msyrus",
+  "publisher": "etng",
   "keywords": [
     "go",
     "golang",
@@ -83,5 +83,10 @@
     "eslint": "^10.2.0",
     "typescript": "^5.7.0",
     "typescript-eslint": "^8.58.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/etng/vscode-godoc-peek"
+  },
+  "license": "MIT"
 }

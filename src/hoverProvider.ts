@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { GoSymbolRef, findInGoComments, findInMarkdown } from "./symbolLocator";
 import { GoDocResult, resolveGoDoc, resolveGoWorkingDirectory } from "./goDoc";
+import { log } from "./outputChannel";
 
 const SELECTOR: vscode.DocumentSelector = [{ language: "markdown" }, { language: "go" }];
 
@@ -12,6 +13,7 @@ export function registerHover(context: vscode.ExtensionContext): void {
         if (!ref) {
           return undefined;
         }
+        log(`[hover] ${document.languageId} 定位到 ${ref.raw} → ${ref.queries[0]}`);
 
         const doc = await resolveGoDoc(ref, resolveGoWorkingDirectory(document), token);
         if (!doc) {
